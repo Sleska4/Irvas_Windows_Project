@@ -1,4 +1,4 @@
-const forms = () => {
+const forms = (state) => {
     const form = document.querySelectorAll('form'),
           input = document.querySelectorAll('input'),
         phoneInput = document.querySelectorAll('input[name="user_phone"]');
@@ -34,6 +34,11 @@ const forms = () => {
            el.appendChild(statusMessage);
 
            const formDate = new FormData(el);
+           if(el.getAttribute('data-calc') === 'end'){
+               for(let key in state){
+                   formDate.append(key, state[key]);
+               }
+           }
 
            postData('https://jsonplaceholder.typicode.com/posts', formDate)
                .then(res => {
